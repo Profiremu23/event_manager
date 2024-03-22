@@ -1,6 +1,9 @@
 puts 'Event Manager Initialized!'
 
 lines = File.readlines('event_attendees.csv')
-lines.each do |line|
-  puts line
+lines.each_with_index do |line, index|
+  next if index == 0
+  columns = line.split(",")
+  name = columns[2]
+  p name
 end
