@@ -3,6 +3,7 @@
 require 'csv'
 require 'erb'
 require 'google/apis/civicinfo_v2'
+require 'time'
 
 def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5, '0')[0..4]
@@ -15,6 +16,13 @@ def clean_phone_number(phone_number)
     phone_number[0] = '' if phone_number.size > 10 && phone_number[0] == '1'
     phone_number.gsub(/[-.() ]/, '')
   end
+end
+
+def time_targetting(date)
+  date_format = Time.strptime(date, '%m/%d/%y %H:%M')
+
+  puts date_format.hour
+  puts date_format.wday
 end
 
 def legislators_by_zipcode(zip)
@@ -60,6 +68,7 @@ contents.each do |row|
   zipcode = clean_zipcode(row[:zipcode])
 
   puts phone_number = clean_phone_number(row[:homephone])
+  puts time_tables = time_targetting(row[:regdate])
 
   legislators = legislators_by_zipcode(zipcode)
 
