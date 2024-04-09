@@ -18,13 +18,6 @@ def clean_phone_number(phone_number)
   end
 end
 
-def time_targetting(date)
-  date_format = Time.strptime(date, '%m/%d/%y %H:%M')
-
-  puts date_format.hour
-  puts date_format.wday
-end
-
 def legislators_by_zipcode(zip)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
@@ -60,15 +53,30 @@ contents = CSV.open(
 
 template_letter = File.read('form_letter.erb')
 erb_template = ERB.new template_letter
+count_by_days = {}
+count_by_hours = {}
 
-contents.each do |row|
+contents.each do |row| # Thanks letter generator
   id = row[0]
   name = row[:first_name]
 
   zipcode = clean_zipcode(row[:zipcode])
 
   puts phone_number = clean_phone_number(row[:homephone])
-  puts time_tables = time_targetting(row[:regdate])
+
+  date_format = Time.strptime(row[:regdate], '%m/%d/%y %H:%M')
+
+  if count_by_days[date_format.wday] == nil
+    count_by_days[date_format.wday] = 1
+  else
+    count_by_hours[date_format.wday] = 1
+  end
+
+  if count_by_hours[date_format.hour] == nil
+    count_by_hours[date_format.hour] = 1
+  else
+    count_by_hours[date_format.hour] += 1
+  end
 
   legislators = legislators_by_zipcode(zipcode)
 
@@ -76,3 +84,6 @@ contents.each do |row|
 
   save_thank_you_letter(id, form_letter)
 end
+
+puts count_by_days
+puts count_by_hours
