@@ -1,1 +1,4 @@
 # event_manager
+My third OOP project made with Ruby for my Odin Project journey (TOP), which is a software to generate HTML letters for inviting members for an event using Ruby file management, a CSV and an ERB file. Once being run, the software will execute lib/event_manager.rb, which will handle every row on event_attendees.csv file and carries the most important information to a generated HTML file format that can be found in the output file. It also returns a hash that contains the user registration days and hours!
+## How do you run it?
+Just like with many other Ruby softwares, use Git or your local Linux/MacOS terminal, navigate to "../event_manager", then enter "ruby lib/event_manager" to run this wonderful piece of software!

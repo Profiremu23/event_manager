@@ -11,7 +11,7 @@ end
 
 def clean_phone_number(phone_number)
   if phone_number.size < 10
-    phone_number = "It's a bad number"
+    "It's a bad number"
   else
     phone_number[0] = '' if phone_number.size > 10 && phone_number[0] == '1'
     phone_number.gsub(/[-.() ]/, '')
